@@ -67,22 +67,26 @@ function updateCountdownDisplay() {
 function runBreathCycle() {
     if (!isMeditating) return;
 
-    // 1. Inhale (4s) - Continuous vibration
+    // 1. Inhale (4s) - "ブブブブブブ" (Continuous rumble/tremor)
     breathGuide.textContent = "吸って...";
-    vibratePattern([INHALE_TIME]);
+    // Generate 4s of rapid pulsing to create "bubububu" sensation
+    // Cycle: ~250ms (ON 200, OFF 50) * 16 = 4000ms
+    const inhalePattern = [];
+    for (let i = 0; i < 16; i++) {
+        inhalePattern.push(200, 50);
+    }
+    vibratePattern(inhalePattern);
 
     // 2. Hold (7s) - starts after INHALE_TIME
     breathTimeout = setTimeout(() => {
         if (!isMeditating) return;
         breathGuide.textContent = "止めて...";
 
-        // "Bu . Bu . Bu ..." pattern (e.g., 500ms ON, 500ms OFF)
-        const holdPulse = 500;
-        const holdGap = 500;
-        const holdCycles = Math.floor(HOLD_TIME / (holdPulse + holdGap));
+        // "ブ・ブ・ブ・・・" 7 times, 1s interval (ON 500, OFF 500)
+        // 7 cycles * 1000ms = 7000ms
         const holdPattern = [];
-        for (let i = 0; i < holdCycles; i++) {
-            holdPattern.push(holdPulse, holdGap);
+        for (let i = 0; i < 7; i++) {
+            holdPattern.push(500, 500);
         }
         vibratePattern(holdPattern);
 
@@ -91,14 +95,11 @@ function runBreathCycle() {
             if (!isMeditating) return;
             breathGuide.textContent = "吐いて...";
 
-            // "Different feel continuous" - Rapid pulse (Buzz/Purr effect)
-            // e.g., 50ms ON, 50ms OFF
-            const buzzPulse = 40;
-            const buzzGap = 40;
-            const buzzCycles = Math.floor(EXHALE_TIME / (buzzPulse + buzzGap));
+            // "ブブッブブッ" 7 times, 1s interval
+            // Pattern: "Bu-Bu-" (ON 150, OFF 50, ON 150) + Rest (OFF 650) = 1000ms
             const exhalePattern = [];
-            for (let i = 0; i < buzzCycles; i++) {
-                exhalePattern.push(buzzPulse, buzzGap);
+            for (let i = 0; i < 7; i++) {
+                exhalePattern.push(150, 50, 150, 650);
             }
             vibratePattern(exhalePattern);
 
