@@ -1,3 +1,5 @@
-# Meisou Project
+# nekochanmeisou
 
-Git environment setup complete.
+シロ兄ちゃんと瞑想
+
+(Git environment setup complete)
