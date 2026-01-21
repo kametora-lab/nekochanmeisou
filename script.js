@@ -95,10 +95,10 @@ function runBreathCycle() {
             if (!isMeditating) return;
             breathGuide.textContent = "吐いて...";
 
-            // "ブブッブブッ" 8 times to match 8s interval
+            // "ブブッブブッ" 12 times to ensure it covers the full 8s without early cut-off
             // Pattern: "Bu-Bu-" (ON 150, OFF 50, ON 150) + Rest (OFF 650) = 1000ms
             const exhalePattern = [];
-            for (let i = 0; i < 8; i++) {
+            for (let i = 0; i < 12; i++) {
                 exhalePattern.push(150, 50, 150, 650);
             }
             vibratePattern(exhalePattern);
