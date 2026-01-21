@@ -43,7 +43,7 @@ function startMeditation() {
     // Init Timer
     remainingSeconds = durationMinutes * 60;
     updateCountdownDisplay();
-    
+
     timerInterval = setInterval(() => {
         remainingSeconds--;
         updateCountdownDisplay();
@@ -67,21 +67,40 @@ function updateCountdownDisplay() {
 function runBreathCycle() {
     if (!isMeditating) return;
 
-    // 1. Inhale (4s)
+    // 1. Inhale (4s) - Continuous vibration
     breathGuide.textContent = "吸って...";
-    vibratePattern([200]); // Single pulse to start inhale
+    vibratePattern([INHALE_TIME]);
 
     // 2. Hold (7s) - starts after INHALE_TIME
     breathTimeout = setTimeout(() => {
         if (!isMeditating) return;
         breathGuide.textContent = "止めて...";
-        vibratePattern([50, 50, 50]); // Double quick pulse for hold
-        
+
+        // "Bu . Bu . Bu ..." pattern (e.g., 500ms ON, 500ms OFF)
+        const holdPulse = 500;
+        const holdGap = 500;
+        const holdCycles = Math.floor(HOLD_TIME / (holdPulse + holdGap));
+        const holdPattern = [];
+        for (let i = 0; i < holdCycles; i++) {
+            holdPattern.push(holdPulse, holdGap);
+        }
+        vibratePattern(holdPattern);
+
         // 3. Exhale (8s) - starts after INHALE + HOLD
         breathTimeout = setTimeout(() => {
             if (!isMeditating) return;
             breathGuide.textContent = "吐いて...";
-            vibratePattern([500]); // Long soft vibration for exhale start
+
+            // "Different feel continuous" - Rapid pulse (Buzz/Purr effect)
+            // e.g., 50ms ON, 50ms OFF
+            const buzzPulse = 40;
+            const buzzGap = 40;
+            const buzzCycles = Math.floor(EXHALE_TIME / (buzzPulse + buzzGap));
+            const exhalePattern = [];
+            for (let i = 0; i < buzzCycles; i++) {
+                exhalePattern.push(buzzPulse, buzzGap);
+            }
+            vibratePattern(exhalePattern);
 
             // Schedule next cycle
             breathTimeout = setTimeout(() => {
@@ -106,9 +125,9 @@ function finishMeditation() {
     isMeditating = false;
     clearInterval(timerInterval);
     clearTimeout(breathTimeout);
-    
+
     appContainer.classList.remove('breathing');
-    
+
     meditationScreen.classList.remove('active');
     finishScreen.classList.add('active');
 }
