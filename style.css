@@ -1,0 +1,175 @@
+:root {
+    --primary-color: #8EACCD;    /* Soft Blue for sleep */
+    --secondary-color: #D2E0FB;  /* Lighter Blue */
+    --text-color: #333;
+    --bg-color: #F9F9F9;
+    --accent-color: #DEE5D4;     /* Soft Greenish */
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#app {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.screen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.8s ease;
+    padding: 20px;
+}
+
+.screen.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+/* Setup Screen */
+h1 {
+    font-size: 2rem;
+    margin-bottom: 2rem;
+    color: var(--primary-color);
+    text-align: center;
+}
+
+.instruction {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+.sub-instruction {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 3rem;
+    text-align: center;
+}
+
+.timer-settings {
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+}
+
+/* Buttons */
+button {
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: transform 0.1s;
+}
+
+button:active {
+    transform: scale(0.95);
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 15px 60px;
+    font-size: 1.2rem;
+    box-shadow: 0 4px 10px rgba(142, 172, 205, 0.3);
+}
+
+.btn-secondary {
+    background-color: var(--secondary-color);
+    color: #555;
+    padding: 10px 20px;
+    font-size: 0.9rem;
+}
+
+.btn-text {
+    background: none;
+    color: #888;
+    margin-top: 30px;
+    font-size: 0.9rem;
+    text-decoration: underline;
+}
+
+/* Meditation Screen */
+.timer-countdown {
+    position: absolute;
+    top: 40px;
+    font-size: 1.2rem;
+    color: #aaa;
+}
+
+.cat-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#cat-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%; /* Mask if needed, or just let it be transparent */
+    /* Animation will be applied via JS class */
+}
+
+/* Breathing Animation */
+/* Cycle: 19s total (4s Inhale, 7s Hold, 8s Exhale) */
+@keyframes breathe-anim {
+    0% { transform: scale(1); }                /* Start Inhale */
+    21% { transform: scale(1.15); }            /* End Inhale (4s / 19s ≈ 21%) */
+    58% { transform: scale(1.15); }            /* End Hold (11s / 19s ≈ 58%) */
+    100% { transform: scale(1); }              /* End Exhale (19s) */
+}
+
+.breathing #cat-image {
+    animation: breathe-anim 19s infinite ease-in-out;
+}
+
+.guide-text {
+    font-size: 1.5rem;
+    margin-top: 2rem;
+    color: var(--primary-color);
+    min-height: 1.5em; 
+    transition: opacity 0.5s;
+}
+
+/* Finish Screen */
+.fade-in {
+    animation: fadeIn 2s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}

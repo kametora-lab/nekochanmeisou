@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>睡眠瞑想 - 猫と呼吸</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- セットアップ画面 -->
+        <section id="setup-screen" class="screen active">
+            <div class="content-wrapper">
+                <h1>睡眠瞑想</h1>
+                <p class="instruction">まずは楽な姿勢になってくださいニダ。</p>
+                <p class="sub-instruction">準備ができたら時間を設定してスタートするニダ。</p>
+                
+                <div class="timer-settings">
+                    <span id="display-time">5</span> 分
+                    <button id="add-time-btn" class="btn-secondary">+1分</button>
+                </div>
+
+                <button id="start-btn" class="btn-primary">スタート</button>
+            </div>
+        </section>
+
+        <!-- 瞑想画面 -->
+        <section id="meditation-screen" class="screen">
+            <div class="timer-countdown" id="countdown">05:00</div>
+            
+            <div class="cat-container">
+                <div id="breathing-circle"></div>
+                <img src="assets/cat.png" alt="Sleeping Cat" id="cat-image">
+            </div>
+
+            <div class="guide-text" id="breath-guide">吸って...</div>
+            
+            <button id="stop-btn" class="btn-text">終了</button>
+        </section>
+
+        <!-- 完了画面 -->
+        <section id="finish-screen" class="screen">
+            <h2 class="fade-in">おやすみなさい...</h2>
+            <button id="restart-btn" class="btn-text">もう一度</button>
+        </section>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
